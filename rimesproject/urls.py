@@ -25,7 +25,7 @@ def home(request):
     return HttpResponse("Welcome to the Rimes Project!")
 
 urlpatterns = [
-    path("", home, name="home"),
+    path('', include('messagesapp.urls')),
     path("admin/", admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('blogs/', include('blogs.urls')),

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h2>Analyze Messages (r, i, m, e, s)</h2>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Submit</button>
+</form>
+
+<hr>
+<form method="get">
+  <label>Filter:</label>
+  <select name="user_filter" onchange="this.form.submit()">
+    <option value="all" {% if filter_user == 'all' %}selected{% endif %}>All</option>
+    <option value="registered" {% if filter_user == 'registered' %}selected{% endif %}>Registered Users</option>
+    <option value="anonymous" {% if filter_user == 'anonymous' %}selected{% endif %}>Anonymous</option>
+  </select>
+</form>
+
+<canvas id="barChart" width="400" height="200"></canvas>
+<canvas id="pieChart" width="400" height="200"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const data = {
+    labels: ['r', 'i', 'm', 'e', 's'],
+    datasets: [{
+      label: 'Letter Count',
+      data: [
+        {{ total_counts.r }},
+        {{ total_counts.i }},
+        {{ total_counts.m }},
+        {{ total_counts.e }},
+        {{ total_counts.s }},
+      ],
+      backgroundColor: ['#f94144', '#f3722c', '#f9c74f', '#43aa8b', '#577590'],
+    }]
+  };
+
+  new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: data,
+  });
+
+  new Chart(document.getElementById('pieChart'), {
+    type: 'pie',
+    data: data,
+  });
+</script>
+{% endblock %}

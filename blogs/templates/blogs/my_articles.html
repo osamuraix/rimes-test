@@ -1,3 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
 <h2>My Articles</h2>
 <a href="{% url 'article_create' %}">+ New</a>
 <ul>
@@ -9,3 +15,5 @@
     </li>
     {% endfor %}
 </ul>
+
+{% endblock %}
